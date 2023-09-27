@@ -47,8 +47,7 @@ setTimeout(() => {
         const time = item.querySelector("[name=tempoCardDuration]").textContent
         const ticketNum = item.querySelector("span[title]").textContent
 
-        const formattedText = `
-## ${title} - ${ticketNum} (${time})
+        const formattedText = `## ${title} - ${ticketNum} (${time})
 ${desc}
 
 `
