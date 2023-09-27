@@ -1,8 +1,8 @@
 {
-  "name": "mygreffe-tools",
-  "displayName": "Gitlab tools",
-  "version": "0.0.1",
-  "description": "Gitlab extensions",
+  "name": "mg-tools",
+  "displayName": "MG Developer",
+  "version": "0.0.3",
+  "description": "MG Developer tools",
   "author": "Renan Decamps <renan.decamps@gmail.com>",
   "scripts": {
     "dev": "plasmo dev",
@@ -26,7 +26,8 @@
   },
   "manifest": {
     "permissions": [
-      "clipboardWrite"
+      "clipboardWrite",
+      "activeTab"
     ],
     "host_permissions": [
       "https://*/*"
