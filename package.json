@@ -1,7 +1,7 @@
 {
   "name": "mg-tools",
   "displayName": "MG Developer",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "MG Developer tools",
   "author": "Renan Decamps <renan.decamps@gmail.com>",
   "license": "MIT",
