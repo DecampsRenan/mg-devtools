@@ -1,5 +1,3 @@
-import { createElement } from "react"
-
 // =================================== GITLAB
 const mainButtonsBar = document.querySelector(".detail-page-header-actions")
 
