@@ -18,9 +18,10 @@ export const Content = () => {
   const [cookieName, setCookieName] = useStorage("cookie", "")
 
   const cookieValue = useCaptureCookie(cookieName)
+  const formattedCookieValue = `${cookieName}=${cookieValue}`
 
   useEffect(() => {
-    setValue(cookieValue)
+    setValue(formattedCookieValue)
   }, [cookieValue])
 
   const handleSaveCookieName = ({ target }) => {
@@ -47,7 +48,7 @@ export const Content = () => {
           </Button>
         )}
       </HStack>
-      <Code>{cookieValue}</Code>
+      <Code>{formattedCookieValue}</Code>
     </Stack>
   )
 }

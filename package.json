@@ -1,14 +1,16 @@
 {
   "name": "mg-tools",
   "displayName": "MG Developer",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "MG Developer tools",
   "author": "Renan Decamps <renan.decamps@gmail.com>",
   "license": "MIT",
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
-    "test": "plasmo test"
+    "test": "plasmo test",
+    "build:prod": "pnpm build --zip",
+    "build:prod:firefox": "pnpm build --zip --target=firefox-mv3"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.1",
@@ -33,10 +35,14 @@
     "typescript": "5.2.2"
   },
   "manifest": {
+    "browser_specific_settings": {
+      "gecko": {
+        "id": "{20afd9b9-5be1-44f3-bd95-58a3445b2b3d}"
+      }
+    },
     "permissions": [
       "clipboardWrite",
       "activeTab",
-      "webRequest",
       "cookies"
     ],
     "host_permissions": [
