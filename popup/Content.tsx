@@ -6,6 +6,7 @@ import {
   HStack,
   Input,
   Stack,
+  Text,
   useClipboard
 } from "@chakra-ui/react"
 import { useEffect } from "react"
@@ -13,6 +14,8 @@ import { useEffect } from "react"
 import { useStorage } from "@plasmohq/storage/hook"
 
 import { useCaptureCookie } from "~popup"
+
+import packageJson from "../package.json"
 
 export const Content = () => {
   const [cookieName, setCookieName] = useStorage("cookie", "")
@@ -33,6 +36,7 @@ export const Content = () => {
   return (
     <Stack m="4" w={300}>
       <HStack alignItems="flex-end">
+        <Text>MG DevTools v${packageJson.version}</Text>
         <FormControl>
           <FormLabel>Cookie name</FormLabel>
           <Input
