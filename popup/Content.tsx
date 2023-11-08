@@ -1,58 +1,71 @@
 import {
+  Accordion,
   Button,
-  Code,
   FormControl,
   FormLabel,
   HStack,
-  Input,
   Stack,
-  Text,
-  useClipboard
+  Text
 } from "@chakra-ui/react"
-import { useEffect } from "react"
+import { v4 as uuid } from "uuid"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
-import { useCaptureCookie } from "~popup"
+import { Cookie } from "~popup/Cookie"
 
 import packageJson from "../package.json"
 
 export const Content = () => {
-  const [cookieName, setCookieName] = useStorage("cookie", "")
-
-  const cookieValue = useCaptureCookie(cookieName)
-  const formattedCookieValue = `${cookieName}=${cookieValue}`
-
-  useEffect(() => {
-    setValue(formattedCookieValue)
-  }, [cookieValue])
-
-  const handleSaveCookieName = ({ target }) => {
-    setCookieName(target.value)
-  }
-
-  const { onCopy, hasCopied, setValue } = useClipboard("")
+  const [cookies, setCookies] = useStorage<
+    {
+      id: string
+      label: string
+    }[]
+  >("cookies", [{ id: uuid(), label: "" }])
 
   return (
-    <Stack m="4" w={300}>
-      <HStack alignItems="flex-end">
-        <Text>MG DevTools v${packageJson.version}</Text>
-        <FormControl>
-          <FormLabel>Cookie name</FormLabel>
-          <Input
-            type="text"
-            onChange={handleSaveCookieName}
-            value={cookieName}
-            minW="28"
-          />
-        </FormControl>
-        {!!cookieValue && (
-          <Button onClick={onCopy} isDisabled={hasCopied}>
-            {hasCopied ? "Copied!" : "Copy"}
-          </Button>
-        )}
-      </HStack>
-      <Code>{formattedCookieValue}</Code>
+    <Stack pt="2" w={400}>
+      <Stack px="4">
+        <HStack alignItems="flex-end">
+          <FormControl>
+            <FormLabel>Cookie names</FormLabel>
+            <Accordion allowMultiple>
+              {cookies.map((cookie, index) => (
+                <Cookie
+                  key={cookie.id}
+                  label={cookie.label}
+                  onChange={async ({ label }) => {
+                    cookies[index] = {
+                      ...cookies[index],
+                      label
+                    }
+                    setCookies([...cookies])
+                  }}
+                  onDelete={() =>
+                    setCookies(
+                      cookies.filter(
+                        (currentCookie) => currentCookie.id !== cookie.id
+                      )
+                    )
+                  }
+                />
+              ))}
+            </Accordion>
+          </FormControl>
+        </HStack>
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => setCookies([...cookies, { id: uuid(), label: "" }])}>
+          Add new cookie
+        </Button>
+      </Stack>
+
+      <Stack bg="gray.700" color="gray.200" px="4" py="2">
+        <Text>
+          MG DevTools v{packageJson.version} - {process.env.NODE_ENV}
+        </Text>
+      </Stack>
     </Stack>
   )
 }

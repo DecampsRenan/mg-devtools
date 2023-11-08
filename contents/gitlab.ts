@@ -2,7 +2,7 @@ function createBtn(label, onClick = () => {}) {
   const btn = document.createElement("button")
   btn.textContent = label
   btn.classList.add("btn", "btn-confirm")
-  resolveAllBtn.addEventListener("click", onClick)
+  btn.addEventListener("click", onClick)
   return btn
 }
 

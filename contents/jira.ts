@@ -1,22 +1,60 @@
-function createBtn(label, onClick = () => {}) {
+function createBtn(
+  label: string,
+  onClick: (this: Window, ev: WindowEventMap["click"]) => any
+) {
   const btn = document.createElement("button")
   btn.textContent = "Copy"
   btn.style.display = "inline-block"
-  btn.style.left = "3px"
-  btn.style.right = "3px"
-  btn.classList.add("tuiButton", "tuiButton--primary")
+  btn.classList.add("tuiButton", "tuiButton--primary", "tuiButton--small")
   btn.addEventListener("click", onClick)
   return btn
 }
 
+function copyToClipboard(textToCopy: string) {
+  const textContentElt = document.createElement("textarea")
+  textContentElt.value = textToCopy
+  textContentElt.style.position = "fixed"
+  textContentElt.style.left = "-9999px"
+  document.body.appendChild(textContentElt)
+  textContentElt.focus()
+  textContentElt.select()
+  textContentElt.setSelectionRange(0, 99999)
+  document.execCommand("copy")
+  textContentElt.remove()
+}
+
+const useToggleElt = (elt: HTMLElement) => {
+  const defaultWidth = elt.style.width
+  const defaultPadding = elt.style.padding
+
+  function hide() {
+    elt.style.width = "0px"
+    elt.style.visibility = "hidden"
+  }
+
+  function show() {
+    elt.style.width = defaultWidth
+    elt.style.visibility = "visible"
+  }
+
+  return {
+    show,
+    hide
+  }
+}
+
 setTimeout(() => {
-  // =================================== JIRA
   const dayReportTitles = Array.from(
     document.querySelectorAll("[name=calendarCanvasDayHeader]")
   )
 
-  dayReportTitles.forEach((elt, i) => {
-    const copyReportBtn = createBtn("Copy", async () => {
+  dayReportTitles.forEach((dayHeader, i) => {
+    const spentDayHours = dayHeader.querySelector<HTMLSpanElement>(
+      "h3 > span:nth-child(2)"
+    )
+
+    const buttonCopyLogic = (e) => {
+      const elt = e.target as HTMLButtonElement
       const currentDay = Array.from(
         document.querySelectorAll(
           `[name=calendarListViewDay]:nth-child(${
@@ -43,23 +81,33 @@ ${desc}
         }, "")
         .trim()
 
-      const textContentElt = document.createElement("textarea")
-      textContentElt.value = txt
-      textContentElt.style.position = "fixed"
-      textContentElt.style.left = "-9999px"
-      document.body.appendChild(textContentElt)
-      textContentElt.focus()
-      textContentElt.select()
-      textContentElt.setSelectionRange(0, 99999)
-      document.execCommand("copy")
-      textContentElt.remove()
-
-      copyReportBtn.textContent = "✅ Copied"
+      copyToClipboard(txt)
+      elt.textContent = "✅ Copied"
       setTimeout(() => {
-        copyReportBtn.textContent = "Copy"
+        elt.textContent = "Copy"
       }, 2000)
+    }
+
+    const copyReportBtn = createBtn("R", buttonCopyLogic)
+    copyReportBtn.style.fontSize = ".8em"
+    copyReportBtn.style.margin = "0px"
+    const { show: showCopyReportBtn, hide: hideCopyReportBtn } =
+      useToggleElt(copyReportBtn)
+    hideCopyReportBtn()
+
+    const { show: showSpentDayHours, hide: hideSpentDayHours } =
+      useToggleElt(spentDayHours)
+    dayHeader.addEventListener("mouseenter", () => {
+      hideSpentDayHours()
+      showCopyReportBtn()
     })
-    elt.appendChild(copyReportBtn)
+
+    dayHeader.addEventListener("mouseleave", () => {
+      hideCopyReportBtn()
+      showSpentDayHours()
+    })
+
+    dayHeader.querySelector<HTMLSpanElement>("h3").append(copyReportBtn)
   })
 }, 3000)
 
