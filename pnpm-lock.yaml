@@ -21,8 +21,8 @@ dependencies:
     specifier: 1.8.1
     version: 1.8.1(react@18.2.0)
   '@tanstack/react-query':
-    specifier: 5.0.0-rc.5
-    version: 5.0.0-rc.5(react-dom@18.2.0)(react@18.2.0)
+    specifier: 5.8.1
+    version: 5.8.1(react-dom@18.2.0)(react@18.2.0)
   framer-motion:
     specifier: 10.16.4
     version: 10.16.4(react-dom@18.2.0)(react@18.2.0)
@@ -3831,12 +3831,12 @@ packages:
       - typescript
     dev: true
 
-  /@tanstack/query-core@5.0.0-rc.5:
-    resolution: {integrity: sha512-Rht0Krzo7iYXmYTaa4YTS0OAFY4ZGFhvQ4p1t5IobUkuP9zGsFBb8EUh55GKZeRNuHb9WvLQWXCVgfY40PQYjA==}
+  /@tanstack/query-core@5.8.1:
+    resolution: {integrity: sha512-Y0enatz2zQXBAsd7XmajlCs+WaitdR7dIFkqz9Xd7HL4KV04JOigWVreYseTmNH7YFSBSC/BJ9uuNp1MAf+GfA==}
     dev: false
 
-  /@tanstack/react-query@5.0.0-rc.5(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-Iwg5d88RRC1mU1U8nQnm3C7KsIYDzhbNB4EtYniuVvcLeZ3fqrFT7hzuvbR+jLgbERupn9+YpDlNXj2PmcULYA==}
+  /@tanstack/react-query@5.8.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-YMagxS8iNPOLg0pK6WOjdSDlAvWKOf69udLOwQrBVmkC2SRLNLko7elo5Ro3ptlJkXvTVHidxC/h5KGi5bH1XQ==}
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0
@@ -3847,8 +3847,7 @@ packages:
       react-native:
         optional: true
     dependencies:
-      '@tanstack/query-core': 5.0.0-rc.5
-      client-only: 0.0.1
+      '@tanstack/query-core': 5.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
@@ -4644,10 +4643,6 @@ packages:
   /cli-width@4.1.0:
     resolution: {integrity: sha512-ouuZd4/dm2Sw5Gmqy6bGyNNNe1qt9RpmxveLSO7KcgsTnU7RXfsw+/bukWGo1abgBiMAic068rclZsO4IWmmxQ==}
     engines: {node: '>= 12'}
-    dev: false
-
-  /client-only@0.0.1:
-    resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
     dev: false
 
   /clone@1.0.4:
