@@ -1,0 +1,13 @@
+# EXAMPLE USAGE:
+#
+#   Refer for explanation to following link:
+#   https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
+#
+pre-push:
+  commands:
+    eslint:
+      glob: "*.{ts,tsx}"
+      run: yarn eslint --fix {staged_files}
+    prettier:
+      glob: "*.{ts,tsx}"
+      run: pnpm prettier {staged_files}
