@@ -1,6 +1,6 @@
 function createBtn(
   label: string,
-  onClick: (this: Window, ev: WindowEventMap["click"]) => any
+  onClick: (this: Window, ev: WindowEventMap["click"]) => void
 ) {
   const btn = document.createElement("button")
   btn.textContent = "Copy"
@@ -25,7 +25,6 @@ function copyToClipboard(textToCopy: string) {
 
 const useToggleElt = (elt: HTMLElement) => {
   const defaultWidth = elt.style.width
-  const defaultPadding = elt.style.padding
 
   function hide() {
     elt.style.width = "0px"
@@ -63,7 +62,7 @@ setTimeout(() => {
         )
       )
 
-      let txt = currentDay
+      const txt = currentDay
         .reduce((acc, item) => {
           const title = item.querySelector("div[title]").textContent
           const desc = item.querySelector("[name=tempoCardComment]").textContent

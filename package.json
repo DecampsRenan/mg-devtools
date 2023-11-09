@@ -10,6 +10,7 @@
     "build": "plasmo build",
     "test": "plasmo test",
     "build:prod": "pnpm build --zip",
+    "lint": "pnpm eslint .",
     "build:prod:firefox": "pnpm build --zip --target=firefox-mv3"
   },
   "dependencies": {
