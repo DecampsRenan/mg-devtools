@@ -8,6 +8,9 @@ pre-push:
     eslint:
       glob: "*.{ts,tsx}"
       run: yarn eslint --fix {staged_files}
+
+pre-commit:
+  commands:
     prettier:
       glob: "*.{ts,tsx}"
       run: pnpm prettier {staged_files}
