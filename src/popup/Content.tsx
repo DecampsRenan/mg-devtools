@@ -13,7 +13,7 @@ import { useStorage } from "@plasmohq/storage/hook"
 
 import { Cookie } from "~popup/Cookie"
 
-import packageJson from "../package.json"
+import packageJson from "../../package.json"
 
 export const Content = () => {
   const [cookies, setCookies] = useStorage<
