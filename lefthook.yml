@@ -6,11 +6,11 @@
 pre-push:
   commands:
     eslint:
-      glob: "*.{ts,tsx}"
+      glob: '*.{ts,tsx}'
       run: yarn eslint --fix {staged_files}
 
 pre-commit:
   commands:
     prettier:
-      glob: "*.{ts,tsx}"
-      run: pnpm prettier {staged_files}
+      glob: '*.{ts,tsx}'
+      run: pnpm prettier --write {staged_files}

@@ -1,15 +1,15 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQuery } from '@tanstack/react-query';
 
-import { sendToBackground } from "@plasmohq/messaging"
+import { sendToBackground } from '@plasmohq/messaging';
 
 export const useCookie = (name: string) =>
   useQuery({
-    queryKey: ["cookie", name],
+    queryKey: ['cookie', name],
     queryFn: () =>
       sendToBackground({
-        name: "getCookieValue",
+        name: 'getCookieValue',
         body: {
-          name
-        }
-      })
-  })
+          name,
+        },
+      }),
+  });

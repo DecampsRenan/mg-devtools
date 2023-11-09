@@ -5,23 +5,23 @@ import {
   FormLabel,
   HStack,
   Stack,
-  Text
-} from "@chakra-ui/react"
-import { v4 as uuid } from "uuid"
+  Text,
+} from '@chakra-ui/react';
+import { v4 as uuid } from 'uuid';
 
-import { useStorage } from "@plasmohq/storage/hook"
+import { useStorage } from '@plasmohq/storage/hook';
 
-import { Cookie } from "~popup/Cookie"
+import { Cookie } from '~popup/Cookie';
 
-import packageJson from "../../package.json"
+import packageJson from '../../package.json';
 
 export const Content = () => {
   const [cookies, setCookies] = useStorage<
     {
-      id: string
-      label: string
+      id: string;
+      label: string;
     }[]
-  >("cookies", [{ id: uuid(), label: "" }])
+  >('cookies', [{ id: uuid(), label: '' }]);
 
   return (
     <Stack pt="2" w={400}>
@@ -37,15 +37,15 @@ export const Content = () => {
                   onChange={async ({ label }) => {
                     cookies[index] = {
                       ...cookies[index],
-                      label
-                    }
-                    setCookies([...cookies])
+                      label,
+                    };
+                    setCookies([...cookies]);
                   }}
                   onDelete={() =>
                     setCookies(
                       cookies.filter(
-                        (currentCookie) => currentCookie.id !== cookie.id
-                      )
+                        (currentCookie) => currentCookie.id !== cookie.id,
+                      ),
                     )
                   }
                 />
@@ -56,7 +56,7 @@ export const Content = () => {
         <Button
           size="sm"
           variant="outline"
-          onClick={() => setCookies([...cookies, { id: uuid(), label: "" }])}>
+          onClick={() => setCookies([...cookies, { id: uuid(), label: '' }])}>
           Add new cookie
         </Button>
       </Stack>
@@ -67,5 +67,5 @@ export const Content = () => {
         </Text>
       </Stack>
     </Stack>
-  )
-}
+  );
+};

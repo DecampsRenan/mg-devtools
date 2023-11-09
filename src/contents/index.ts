@@ -1,3 +1,3 @@
-export {}
+export {};
 
-console.log("MG Tools ready!")
+console.log('MG Tools ready!');
