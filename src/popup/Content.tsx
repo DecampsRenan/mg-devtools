@@ -1,13 +1,4 @@
-import {
-  Accordion,
-  Button,
-  FormControl,
-  FormLabel,
-  Heading,
-  HStack,
-  Stack,
-  Text,
-} from '@chakra-ui/react';
+import { Accordion, Button, Heading, Stack, Text } from '@chakra-ui/react';
 import { v4 as uuid } from 'uuid';
 
 import { useStorage } from '@plasmohq/storage/hook';
