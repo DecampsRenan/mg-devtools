@@ -33,7 +33,7 @@
     "@types/chrome": "0.0.250",
     "@types/node": "20.9.0",
     "@types/react": "18.2.37",
-    "@types/react-dom": "18.2.7",
+    "@types/react-dom": "18.2.15",
     "@typescript-eslint/eslint-plugin": "6.10.0",
     "@typescript-eslint/parser": "6.10.0",
     "eslint": "8.53.0",
