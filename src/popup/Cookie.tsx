@@ -90,7 +90,7 @@ export const Cookie: FC<CookieProps> = ({ cookie, onDelete, onChange }) => {
               <Item key={cookie.domain} cookie={cookie} label={cookieLabel} />
             ))
           ) : (
-            <Code>No value</Code>
+            <Text justifySelf="center">No cookie value</Text>
           )}
         </Stack>
       </AccordionPanel>
