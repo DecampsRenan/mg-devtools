@@ -1,12 +1,4 @@
-import {
-  Accordion,
-  Button,
-  FormControl,
-  FormLabel,
-  HStack,
-  Stack,
-  Text,
-} from '@chakra-ui/react';
+import { Accordion, Button, Heading, Stack, Text } from '@chakra-ui/react';
 import { v4 as uuid } from 'uuid';
 
 import { useStorage } from '@plasmohq/storage/hook';
@@ -29,33 +21,30 @@ export const Content = () => {
     <>
       <Stack py="4" w={400} maxH={400} mb="8" overflowY="auto">
         <Stack px="4">
-          <HStack alignItems="flex-end">
-            <FormControl>
-              <FormLabel>Cookie names</FormLabel>
-              <Accordion allowMultiple>
-                {cookies.map((cookie, index) => (
-                  <Cookie
-                    cookie={cookie}
-                    key={cookie.id}
-                    onChange={async ({ label }) => {
-                      cookies[index] = {
-                        ...cookies[index],
-                        label,
-                      };
-                      setCookies([...cookies]);
-                    }}
-                    onDelete={() =>
-                      setCookies(
-                        cookies.filter(
-                          (currentCookie) => currentCookie.id !== cookie.id,
-                        ),
-                      )
-                    }
-                  />
-                ))}
-              </Accordion>
-            </FormControl>
-          </HStack>
+          <Heading size="md">Cookie names</Heading>
+          <Accordion allowMultiple>
+            {cookies.map((cookie, index) => (
+              <Cookie
+                cookie={cookie}
+                key={cookie.id}
+                onChange={async ({ label }) => {
+                  cookies[index] = {
+                    ...cookies[index],
+                    label,
+                  };
+                  setCookies([...cookies]);
+                }}
+                onDelete={() =>
+                  setCookies(
+                    cookies.filter(
+                      (currentCookie) => currentCookie.id !== cookie.id,
+                    ),
+                  )
+                }
+              />
+            ))}
+          </Accordion>
+
           <Button
             size="sm"
             variant="outline"
