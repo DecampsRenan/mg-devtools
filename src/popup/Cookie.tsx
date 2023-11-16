@@ -5,25 +5,23 @@ import {
   AccordionPanel,
   Box,
   Button,
-  Checkbox,
   Code,
-  FormControl,
-  FormLabel,
+  Divider,
   HStack,
   Icon,
   IconButton,
   Input,
+  Spacer,
   Stack,
   Text,
-  Tooltip,
   useClipboard,
 } from '@chakra-ui/react';
 import { useEffect, type FC } from 'react';
-import { LuTrash } from 'react-icons/lu';
+import { LuRefreshCw, LuTrash } from 'react-icons/lu';
 
-import { useStorage } from '@plasmohq/storage/hook';
-
+import type { CookieType } from '~popup/Content';
 import { useCookie } from '~popup/cookie.service';
+import { Item } from '~popup/Item';
 
 export interface CookieValue {
   label: string;
@@ -31,24 +29,14 @@ export interface CookieValue {
 }
 
 export interface CookieProps {
-  label: string;
+  cookie: CookieType;
   onDelete?(): void;
   onChange?(value: CookieValue): void;
 }
 
-export const Cookie: FC<CookieProps> = ({ label, onDelete, onChange }) => {
-  const cookieQuery = useCookie(label);
-  const { onCopy, hasCopied, setValue } = useClipboard(cookieQuery.data);
-  const [regex, setRegex] = useStorage(`${label}:regex`);
-  const [allowInjection, setAllowInjection] = useStorage(
-    `${label}:allowInjection`,
-  );
-
-  const formattedCookieValue = `${label}=${cookieQuery.data}`;
-
-  useEffect(() => {
-    setValue(formattedCookieValue);
-  }, [formattedCookieValue, setValue]);
+export const Cookie: FC<CookieProps> = ({ cookie, onDelete, onChange }) => {
+  const cookieLabel = cookie.label;
+  const cookieQuery = useCookie(cookieLabel);
 
   const handleSaveCookieName = ({ target }) => {
     onChange?.({ label: target.value });
@@ -64,22 +52,23 @@ export const Cookie: FC<CookieProps> = ({ label, onDelete, onChange }) => {
         <Input
           flex={1}
           size="sm"
+          borderRadius="md"
           type="text"
           onChange={handleSaveCookieName}
-          value={label}
+          value={cookieLabel}
           minW="28"
         />
 
-        <Tooltip label="No value" isDisabled={!!cookieQuery.data}>
-          <Button
-            size="sm"
-            variant="outline"
-            isLoading={cookieQuery.isLoading}
-            onClick={onCopy}
-            isDisabled={!cookieQuery.data || hasCopied}>
-            {hasCopied ? 'Copied!' : 'Copy'}
-          </Button>
-        </Tooltip>
+        <IconButton
+          size="sm"
+          variant="outline"
+          aria-label="Refetch cookie value"
+          onClick={() => cookieQuery.refetch()}
+          isLoading={cookieQuery.isFetching}
+          isDisabled={cookieQuery.isLoading}
+          icon={<Icon as={LuRefreshCw} />}
+        />
+
         <IconButton
           size="sm"
           variant="ghost"
@@ -89,37 +78,20 @@ export const Cookie: FC<CookieProps> = ({ label, onDelete, onChange }) => {
           icon={<Icon as={LuTrash} />}
         />
       </HStack>
-      <AccordionPanel pb={4}>
-        <Stack>
-          <FormControl>
-            <FormLabel>Regex used to inject cookie</FormLabel>
-            <Input
-              flex={1}
-              size="sm"
-              type="text"
-              onChange={(e) => setRegex(e.target.value)}
-              value={regex}
-              minW="28"
-            />
-          </FormControl>
-          <FormControl>
-            <Checkbox
-              isChecked={!!allowInjection}
-              onChange={(e) => setAllowInjection(e.target.checked)}>
-              Enable injection
-            </Checkbox>
-          </FormControl>
-
-          <Stack>
-            <Text>Current cookie value</Text>
-            <Box bg="gray.100">
-              {cookieQuery.data ? (
-                <Code>{formattedCookieValue}</Code>
-              ) : (
-                <Code>No value</Code>
-              )}
-            </Box>
-          </Stack>
+      <AccordionPanel
+        pb={4}
+        bg="gray.50"
+        shadow="inner"
+        borderRadius="md"
+        mb="2">
+        <Stack spacing="6" divider={<Divider />}>
+          {cookieQuery.data?.length ? (
+            cookieQuery.data?.map((cookie) => (
+              <Item key={cookie.domain} cookie={cookie} label={cookieLabel} />
+            ))
+          ) : (
+            <Code>No value</Code>
+          )}
         </Stack>
       </AccordionPanel>
     </AccordionItem>

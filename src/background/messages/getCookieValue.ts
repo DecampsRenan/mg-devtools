@@ -5,22 +5,20 @@ const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
     return res.send(null);
   }
 
-  let cookie;
+  let cookies;
   try {
-    const [searchedCookie] = await chrome.cookies.getAll({
+    cookies = await chrome.cookies.getAll({
       name: req.body.name,
     });
-    cookie = searchedCookie;
   } catch (error) {
     console.error(`No cookie value matching ${req.body.name}`, error);
   }
 
-  if (!cookie) {
+  if (!cookies) {
     res.send(null);
     return;
   }
-
-  res.send(cookie?.value);
+  res.send(cookies);
 };
 
 export default handler;
