@@ -3,20 +3,15 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Box,
-  Button,
-  Code,
   Divider,
   HStack,
   Icon,
   IconButton,
   Input,
-  Spacer,
   Stack,
   Text,
-  useClipboard,
 } from '@chakra-ui/react';
-import { useEffect, type FC } from 'react';
+import { type FC } from 'react';
 import { LuRefreshCw, LuTrash } from 'react-icons/lu';
 
 import type { CookieType } from '~popup/Content';
@@ -90,7 +85,7 @@ export const Cookie: FC<CookieProps> = ({ cookie, onDelete, onChange }) => {
               <Item key={cookie.domain} cookie={cookie} label={cookieLabel} />
             ))
           ) : (
-            <Code>No value</Code>
+            <Text justifySelf="center">No cookie value</Text>
           )}
         </Stack>
       </AccordionPanel>
