@@ -1,21 +1,29 @@
 import { Accordion, Button, Heading, Stack, Text } from '@chakra-ui/react';
-import { v4 as uuid } from 'uuid';
 
 import { useStorage } from '@plasmohq/storage/hook';
 
 import { Cookie } from '~popup/Cookie';
+import { getNextRuleId } from '~popup/cookie.service';
 
 import packageJson from '../../package.json';
 
 export type CookieType = {
-  id: string;
+  id: number;
+
+  /**
+   * Label of the cookie we want to capture the value
+   */
   label: string;
+
+  /**
+   * Attribute used to store the cookie value marked as used
+   * to override
+   */
+  activeCookieDomain?: string;
 };
 
 export const Content = () => {
-  const [cookies, setCookies] = useStorage<CookieType[]>('cookies', [
-    { id: uuid(), label: '' },
-  ]);
+  const [cookies, setCookies] = useStorage<CookieType[]>('cookies', []);
 
   return (
     <>
@@ -27,11 +35,13 @@ export const Content = () => {
               <Cookie
                 cookie={cookie}
                 key={cookie.id}
-                onChange={async ({ label }) => {
+                onChange={async ({ label, activeDomain }) => {
                   cookies[index] = {
                     ...cookies[index],
                     label,
+                    activeCookieDomain: activeDomain,
                   };
+
                   setCookies([...cookies]);
                 }}
                 onDelete={() =>
@@ -48,7 +58,10 @@ export const Content = () => {
           <Button
             size="sm"
             variant="outline"
-            onClick={() => setCookies([...cookies, { id: uuid(), label: '' }])}>
+            onClick={async () => {
+              const nextCookieId = await getNextRuleId();
+              setCookies([...cookies, { id: nextCookieId, label: '' }]);
+            }}>
             Add new cookie
           </Button>
         </Stack>

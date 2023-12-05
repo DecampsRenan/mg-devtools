@@ -1,13 +1,16 @@
 import {
   Badge,
+  Box,
   Button,
-  chakra,
   Code,
+  Collapse,
   HStack,
   Spacer,
   Stack,
+  Switch,
   Tooltip,
   useClipboard,
+  useDisclosure,
   Wrap,
 } from '@chakra-ui/react';
 import { useEffect } from 'react';
@@ -15,10 +18,15 @@ import { useEffect } from 'react';
 export const Item = ({
   cookie,
   label,
+  onChange,
+  isActive = false,
 }: {
   label: string;
   cookie: chrome.cookies.Cookie;
+  onChange?: (isActive: boolean) => void;
+  isActive?: boolean;
 }) => {
+  const { isOpen, onToggle } = useDisclosure();
   const { onCopy, hasCopied, setValue } = useClipboard(cookie.value);
 
   const formattedCookieValue = `${label}=${cookie.value}`;
@@ -30,16 +38,29 @@ export const Item = ({
   return (
     <Stack>
       <HStack alignItems="center">
-        <chakra.span>{cookie.domain}</chakra.span>
+        <Button size="sm" variant="link" onClick={onToggle}>
+          {cookie.domain}
+        </Button>
         <Spacer />
         <Button size="xs" colorScheme="blue" onClick={() => onCopy()}>
           {hasCopied ? 'Copied!' : 'Copy'}
         </Button>
       </HStack>
+      <Switch
+        size="sm"
+        value={cookie.domain}
+        isChecked={isActive}
+        onChange={(e) => onChange(e.target.checked)}>
+        Use this cookie for override
+      </Switch>
 
-      <Code borderRadius="md" p="2" shadow="inner">
-        {cookie.value}
-      </Code>
+      <Collapse in={isOpen} unmountOnExit>
+        <Box overflowX="auto">
+          <Code borderRadius="md" p="2" shadow="inner">
+            {cookie.value}
+          </Code>
+        </Box>
+      </Collapse>
 
       <Wrap shouldWrapChildren>
         <Tooltip
