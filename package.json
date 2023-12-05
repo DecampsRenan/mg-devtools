@@ -52,7 +52,6 @@
       "clipboardWrite",
       "activeTab",
       "cookies",
-      "declarativeNetRequestFeedback",
       "declarativeNetRequest"
     ],
     "host_permissions": [
